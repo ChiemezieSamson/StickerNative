@@ -1,0 +1,1 @@
+React native sticker project
