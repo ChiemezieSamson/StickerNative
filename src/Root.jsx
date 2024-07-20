@@ -6,10 +6,14 @@ import Button from './components/Button'
 import { useState } from 'react';
 import IconButton from './components/IconButton';
 import CircleButton from './components/CircleButton';
+import EmojiPicker from './components/EmojiPicker';
+import EmojiList from './components/EmojiList';
 
 const Root = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showAppOptions, setShowAppOptions] = useState(false)
+  const [isModalVisible, setisModalVisible] = useState(false)
+  const [pickedEmoji, setPickedEmoji] = useState(false)
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -30,15 +34,19 @@ const Root = () => {
   }
 
   const onAddSticker = () => {
-    
+    setisModalVisible(() => true)
+  }
+
+  const onModalClose = () => {
+    setisModalVisible(() => false)
   }
 
   const onSaveImageAsync = () => {
    
   }
   return (
-    <View>
-      <ImageViewer placeholderImageSource={PlaceholderImage} selectedImage={selectedImage}/>
+    <>
+      <ImageViewer placeholderImageSource={PlaceholderImage} selectedImage={selectedImage} pickedEmoji={pickedEmoji}/>
 
      {showAppOptions ?  
      <View className={"absolute bottom-20"}>
@@ -49,11 +57,15 @@ const Root = () => {
       </View>
      </View> 
      : 
-      <View className={"grid max-w-[150px] mx-auto items-center"}>
+      <View className={"basis-1/3 items-center"}>
         <Button theme="primary" lable={"Choose a photo"} onPress={pickImageAsync}/>
         <Button lable={"Use this photo"} onPress={() => setShowAppOptions(() => true)}/>
       </View>}
-    </View>
+
+      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+        <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose}/>
+      </EmojiPicker>
+    </>
   )
 }
 

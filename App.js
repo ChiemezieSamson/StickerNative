@@ -5,7 +5,7 @@ import Root from './src/Root';
 export default function App() {
   return (
     <>
-      <View className="grid h-screen items-center justify-center bg-[#25292e]">
+      <View className="bg-[#25292e] items-center justify-center flex-1">
         <Root />
         <StatusBar style="auto" />
       </View>
